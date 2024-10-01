@@ -1,0 +1,33 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto según la rama que estés utilizando
+  pull_request:
+    branches:
+      - main  # Cambia esto según la rama que estés utilizando
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]  # Puedes usar solo 20.x si no necesitas versiones anteriores
+
+    steps:
+      - uses: actions/checkout@v3  # Actualiza a la versión más reciente
+      - name: Use Node.js
+        uses: actions/setup-node@v3  # Actualiza a la versión más reciente
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build  # Cambia esto si tu script de construcción tiene otro nombre
+
+      - name: Run Tests
+        run: npm test  # Cambia esto si tu script de prueba tiene otro nombre
